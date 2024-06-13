@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+	<title>Quản Lý</title>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+	<link href='https://fonts.googleapis.com/css?family=Roboto:400,20,300,700' rel='stylesheet' type='text/css'>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<link rel="stylesheet" href="/css/bootstrap-select.min.css">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" />
+	<script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+
+	<link rel="stylesheet" href="https://cdn.datatables.net/1.13.4/css/jquery.dataTables.css" />
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js"></script>
+	<script type="text/javascript" src="http://cdn.datatables.net/1.2.2/js/jquery.dataTables.min.js"></script>
+	<script type="text/javascript" src="http://maxcdn.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
+	<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css"></script>
+	<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Your custom stylesheets -->
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/main.css">
+
+    <!-- jQuery -->
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <!-- Bootstrap 5 JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+
+
+</head>
+
+<body>
+
+
+
+
+	<nav class="navbar navbar-expand-lg navbar-dark ftco_navbar bg-dark ftco-navbar-light row " id="ftco-navbar">
+		<div class="container-fluid">
+
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#ftco-nav"
+				aria-controls="ftco-nav" aria-expanded="false" aria-label="Toggle navigation">
+				<spa192.168.1.5n class="fa fa-bars"></spa192.168.1.5n> Menu
+			</button>
+
+			<div class="collapse navbar-collapse" id="ftco-nav">
+				<ul class="navbar-nav mr-auto">
+
+
+
+
+					<li class="nav-item active"><a href="http://192.168.1.5:3000/product/list" class="nav-link">Trang chủ</a></li>
+					<li class="nav-item"><a href="http://192.168.1.5:3000/product/category" class="nav-link"> Thể Loại</a></li>
+					<li class="nav-item dropdown"><a href="http://192.168.1.5:3000/users" class="nav-link">Người Dùng</a></li>
+
+
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle"  data-bs-toggle="dropdown"  type="button" aria-expanded="false">Sản Phẩm </a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="http://192.168.1.5:3000/product/list"> Sản phẩm đang bán</a></li>
+							<div class="dropdown-divider"></div>
+						  <li><a class="dropdown-item" href="http://192.168.1.5:3000/product/closeProduct">Sản phẩm lưu trữ</a></li>
+						</ul>
+					  </li>
+					</li>
+
+
+
+					<li class="nav-item"><a href="http://192.168.1.5:3000/bill/listBills" class="nav-link">Đơn Hàng </a></li>
+					<li class="nav-item"><a href="http://192.168.1.5:3000/sendNotify/listNotify" class="nav-link">Gửi thông báo </a></li>
+					<!-- <li class="nav-item"><a href="http://192.168.1.5:3000/chat/listChat" class="nav-link">Chat</a></li> -->
+
+
+					
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle"  data-bs-toggle="dropdown"  type="button" aria-expanded="false">Thống kê</a>
+						<ul class="dropdown-menu">
+							<li><a class="dropdown-item" href="http://192.168.1.5:3000/bill/thongke">Thống kê tổng</a></li>
+							<div class="dropdown-divider"></div>
+						  <li><a class="dropdown-item" href="http://192.168.1.5:3000/bill/thongketheongay">Thống kê theo ngày </a></li>
+						  <div class="dropdown-divider"></div>
+						  <li><a class="dropdown-item" href="http://192.168.1.5:3000/bill/listBillTK">Top 10 sản phẩm bán chạy </a></li>
+						  <div class="dropdown-divider"></div>
+						  <li><a class="dropdown-item" href="http://192.168.1.5:3000/bill/listBillTKTop10Kb">Top 10 sản phẩm không bán được  </a></li>
+						</ul>
+					  </li>
+
+
+
+				</ul>
+
+				<ul class="navbar-nav" style="margin-right: 80px;">
+
+					<li class="nav-item dropdown">
+						<a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" role="button"
+							data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+							<img src="https://img.freepik.com/free-vector/illustration-businessman_53876-5856.jpg?size=626&ext=jpg&ga=GA1.1.1143711753.1667124272&semt=ais"
+								width="30" height="30" class="rounded-circle">
+						</a>
+						<div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+							<a class="dropdown-item" href="#">Edit Profile</a>
+
+							<form method="get" action="/logout"><button class="dropdown-item" type="submit"
+									onclick="return confirm_logout(this);">Log Out</button></form>
+
+						</div>
+					</li>
+				</ul>
+			</div>
+
+		</div>
+
+	</nav>
+	<style>
+		.dropdown-menu {
+    display: none;
+    position: absolute;
+    background-color: #f2f2f2;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown:hover .dropdown-menu {
+    display: block;
+}
+	</style>
+	
+

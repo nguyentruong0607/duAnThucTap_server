@@ -1,0 +1,78 @@
+<div class="container">
+    <button
+      class="btn btn-primary"
+      type="button"
+      data-toggle="collapse"
+      data-target="#filterCollapse"
+      aria-expanded="false"
+      aria-controls="filterCollapse"
+    >
+      Filter
+    </button>
+    <div class="collapse" id="filterCollapse">
+      <div class="card card-body">
+        <h4>Filter Options</h4>
+        <form id="filterForm" action="/product/list/filter" method="get">
+          <div class="row">
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="size">Size:</label>
+                <% var allSizes = []; %> <%
+                listProduct.forEach(function(product) { %> <%
+                product.sizes.forEach(function(size) { %> <% if
+                (!allSizes.includes(size.size)) { %> <%
+                allSizes.push(size.size); %> <% } %> <% }); %> <% }); %> <%
+                var initialSizes = allSizes.slice(); %>
+                <!-- Size Dropdown -->
+                <select class="form-control" id="size" name="size">
+                  <option value="">All Sizes</option>
+                  <% initialSizes.forEach(function(size) { %>
+                  <option value="<%= size %>"><%= size %></option>
+                  <% }); %>
+                </select>
+              </div>
+            </div>
+
+
+            <div class="col-md-4">
+              <div class="form-group">
+                <label for="color">Loại:</label>
+                <select class="form-control" id="color" name="color">
+                  <option value="">All</option>
+                  <% for (let i = 0; i < listLoai.length; i++) { %>
+                  <option value="<%= listLoai[i]._id %>">
+                    <%= listLoai[i].name %>
+                  </option>
+                  <% } %>
+                </select>
+              </div>
+            </div>
+            <div class="col-md-2">
+              <div class="form-group">
+                  <label for="minPrice">Min Price:</label>
+                  <input type="number" class="form-control" id="minPrice" name="minPrice" placeholder="Min Price">
+                </div>
+          </div>
+
+          <div class="col-md-2">
+              <div class="form-group">
+                  <label for="maxPrice">Max Price:</label>
+                  <input type="number" class="form-control" id="maxPrice" name="maxPrice" placeholder="Max Price">
+                </div>
+          </div>
+            
+            <div class="col-md-4">
+              <div class="form-group">
+                <button type="submit" class="btn btn-primary">
+                  Apply Filter
+                </button>
+              </div>
+            </div>
+          </div>
+        </form>
+        
+        
+        
+      </div>
+    </div>
+  </div>
