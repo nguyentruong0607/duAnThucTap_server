@@ -1,0 +1,36 @@
+<button id="toggleChat" style="position: fixed; bottom: 20px; right: 20px; z-index: 1001;">
+    <i class="fas fa-comment"></i> <!-- Assuming you have Font Awesome for the chat icon -->
+  </button>
+  <section style="margin-left: 600px; width: 70%; height: 620px; position: fixed; bottom: 0; z-index: 1000;">
+    <div class="container py-5">
+        <div class="row d-flex justify-content-center">
+            <div class="col-md-8 col-lg-6 col-xl-4">
+                <div class="card" id="chat1" style="border-radius: 15px;">
+                    <div class="card-header d-flex justify-content-between align-items-center p-3 bg-info text-white border-bottom-0"
+                        style="border-top-left-radius: 15px; border-top-right-radius: 15px;">
+                        <i class="fas fa-angle-left"></i>
+                        <p class="mb-0 fw-bold">Live chat</p>
+                        <i class="fas fa-times"></i>
+                    </div>
+                    <div class="card-body" style="height: 500px;">
+                        <!-- Chat content goes here -->
+                    </div>
+                    <div class="form-outline" style="position: absolute; bottom: 0; width: 100%;">
+                        <textarea class="form-control" id="textAreaExample" rows="4"></textarea>
+                        <label class="form-label" for="textAreaExample">Type your message</label>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+  <script>
+    // JavaScript to toggle the display of the chat section
+    $(document).ready(function () {
+      $('#toggleChat').on('click', function () {
+        var chatSection = $('section');
+        chatSection.toggle();
+      });
+    });
+  </script>

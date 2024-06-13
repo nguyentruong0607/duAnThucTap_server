@@ -1,0 +1,35 @@
+  <link rel="stylesheet" href="../inc/red-text.css" >
+<div style="display: flex; text-align: center; align-items: center; gap: 9px; padding: 8px ; justify-content: center; width: 80%; margin: auto;" >
+  <div style="background-color: aquamarine; width: 25%;height: 40px; text-align: center">
+    <a href="http://10.35.4.105:3000/bill/listBills" 
+    >Đơn hàng chờ xác nhận</a>
+  </div>
+  <div style="background-color: aquamarine; width: 25%;height: 40px; text-align: center">
+    <a href="http://10.35.4.105:3000/bill/listBillsXacnhan" 
+      >Đơn hàng đã xác nhận</a
+    >
+  </div>
+  <div style="background-color: aquamarine; width: 25%;height: 40px; text-align: center;">
+    <a href="http://10.35.4.105:3000/bill/listBillsDagiao" 
+      >Đơn hàng đã giao vận chuyển</a
+    >
+  </div>
+  <div style="background-color: aquamarine; width: 25%;height: 40px; text-align: center">
+    <a href="http://10.35.4.105:3000/bill/listBillsDanhan"  >Đơn hàng đã giao</a>
+  </div>
+ 
+</div>
+<script>
+const links = document.querySelectorAll('a');
+  links.forEach(link => {
+    link.addEventListener('click', function() {
+      this.style.color = 'red';
+    });
+  });
+
+</script>
+<style>
+  .menu-link:visited {
+    color: red;
+  }
+</style>
