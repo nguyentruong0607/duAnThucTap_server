@@ -1,0 +1,130 @@
+<%- include('../inc/top') %>
+<div class="container">
+  <div class="row justify-content-center" style="margin-top: 10px;">
+    <div class="col-md-6 text-center mb-5">
+      <h2 class="heading-section"><b>LIST OF ORDERS</b></h2>
+    </div>
+  </div>
+  <div style="margin-bottom: 20px;">
+    <form action="" method="GET">
+      <div class="input-group rounded">
+        <input type="search" class="form-control rounded" placeholder="Search" name="order" aria-describedby="search-addon" />
+        <button type="submit" style="display: inline-block;
+                        line-height: 30px;
+                        padding: 0 50px;
+                        -webkit-transition: all 0.4s ease;
+                        -o-transition: all 0.4s ease;
+                        -moz-transition: all 0.4s ease;
+                        transition: all 0.4s ease;
+                        cursor: pointer;
+                        font-size: 15px;
+                        border-radius: 6px;
+                        margin-left: 5px;
+                        text-transform: uppercase;
+                        font-weight: 700;
+                        color: #fff;
+                        background-color: blue;
+                        font-family: inherit;">
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </form>
+  </div>
+
+  <%- include('../inc/trangthaibill') %>
+
+  <table id="myTable" class="table table-responsive-xl">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col">Tên người dùng</th>
+        <th scope="col">Tên sản phẩm</th>
+        <th scope="col">Kích cỡ</th>
+        <th scope="col">Số lượng</th>
+        <th scope="col">Tổng tiền</th>
+        <th scope="col">Trạng thái</th>
+        <!-- <th scope="col"> Quản lý</th> -->
+      </tr>
+    </thead>
+    <tbody>
+      <% listBill.forEach(function(item) { %>
+      <tr>
+        <td><%= item.name %></td>
+
+        <td style="width: 270px;">
+          <% for (var i = 0; i < item.list.length; i++) { %>
+           - <%= item.list[i].name_product %> <br>
+          
+          <% } %>
+        </td>
+        <td>
+          <% for (var i = 0; i < item.list.length; i++) { %>
+            <%= item.list[i].size %><br>
+          <% } %>
+        </td>
+        <td>
+          <% for (var i = 0; i < item.list.length; i++) { %>
+            <%= item.list[i].quantity %><br>
+          <% } %>
+        </td>
+        <td><%= item.total.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></td>
+        <td>
+          <% if (item.status === 0) { %>
+                Chờ xác nhận
+            <% } 
+            else if (item.status === 1) { %>
+              Đã xác nhận
+            <% } 
+            else if (item.status === 2) { %>
+              Đang giao
+            <% }
+            else if (item.status === 3) { %>
+              Đã giao
+            <% }
+            else if (item.status === 4) { %>
+              Hủy đơn
+            <% }
+            else if (item.status === 5) { %>
+              Đã nhận hàng
+            <% }
+            else { %>
+              Trạng thái: Khác
+            <% } %>
+      </td>
+        <!-- <td>
+          <div style="display: flex;
+          align-items: center;
+          gap: 10px;">
+          <form action="/bill/updatebillPro/<%= item._id %>" method="post">
+            <% if (item.status == 1 && item.status !== 2&& item.status !== 3 && item.status !== 4) { %>
+            <button type="submit" class="btn-primary btn-sm">
+              <span>Giao hàng</span>
+            </button>
+            <% } %>
+          </form>
+          
+          <form action="/bill/updatebillProHuy/<%= item._id %>" method="post">
+            <% if (item.status !== "Xác nhận"&& item.status !== "Đang giao"&& item.status !== "Đã giao"&& item.status !== "Đã nhận") { %>
+            <button type="submit" class="btn-primary btn-sm">
+              <span>Hủy</span>
+            </button>
+            <% } %>
+          </form>
+          
+          <form action="/bill/updatebillProGiaohang/<%= item._id %>" method="post">
+            <% if (item.status === "Xác nhận"&& item.status !== "Đang giao"&& item.status !== "Đã giao"&& item.status !== "Đã nhận") { %>
+            <button type="submit" class="btn-primary btn-sm" id="deliveryButton">
+              <span>Giao hàng</span>
+            </button>
+            <% } %> 
+          </form>
+        </div>
+        </td> -->
+      </tr>
+      <% }); %>
+
+    </tbody>
+  </table>
+</div>
+
+
+<%- include('../inc/bottom') %>

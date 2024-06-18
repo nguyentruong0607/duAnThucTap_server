@@ -1,0 +1,257 @@
+<%- include('../inc/top') %>
+<div style="min-height: 700px; width: 1400px; margin: auto">
+  <div class="row justify-content-center" style="margin-top: 10px">
+    <div style="text-align: center;margin-top: 20px; margin-bottom: 20px;">
+      <h1>Thống kê doanh thu Top 10 sản phẩm không bán chạy</h1>
+     </div>
+  </div>
+
+
+  <div class="centered-div">
+
+    <div>
+      <div
+        style="
+          width: auto;
+          background-color: rgb(207, 210, 210);
+          float: left;
+          margin-right: 10px;
+          padding: 10px;
+        "
+      >
+        <img
+          src="/images//checklist.png"
+          style="width: 50px; margin-top: 20px; float: left"
+        />
+        <div style="float: left; height: 50px; position: relative; top: 22px">
+          <h6 style="font-weight: bold;text-align: center; margin-left: 7px; margin-top: 5px;">Số đơn đã bán</h6>
+          <p
+            style="
+              margin-left: 10px;
+              color: rgb(19, 149, 149);
+              font-weight: bold;
+            "
+          >
+            <%= totalQuantityAllProducts.toLocaleString() %>
+          </p>
+        </div>
+      </div>
+    </div>
+    <div>
+      <div
+        style="
+          width: auto;
+          background-color: rgb(207, 210, 210);
+          float: left;
+          margin-right: 10px;
+          padding: 10px;min-width: 170px;
+        "
+      >
+        <img
+          src="/images//wallet.png"
+          style="width: 50px; margin-top: 20px; float: left"
+        />
+        <div style="float: left; height: 50px; position: relative; top: 22px">
+          <h6 style="font-weight: bold;text-align: center; margin-left: 7px; margin-top: 5px;">Tiền vốn</h6>
+          <p
+            style="
+              margin-left: 10px;
+              color: rgb(19, 149, 149);
+              font-weight: bold;
+            "
+          >
+          <% let thnh = 0 %>
+          <% productList.forEach(product => { %>
+                     <% thnh += product.totalQuantity * product.gianhap  %>
+            <% }); %>
+            <%= thnh.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %>
+          </p>
+        </div>
+      </div>
+    </div>  
+    <div>
+      <div
+        style="
+          width: auto;
+          background-color: rgb(207, 210, 210);
+          float: left;
+          margin-right: 10px;
+          padding: 10px;
+        "
+      >
+        <img
+          src="/images/financial-statement.png"
+          style="width: 50px; margin-top: 20px; float: left"
+        />
+        <div style="float: left; height: 50px; position: relative; top: 22px">
+          <h6 style="font-weight: bold;text-align: center; margin-left: 7px; margin-top: 5px;">Doanh thu</h6>
+          <p
+            style="
+              margin-left: 10px;
+              color: rgb(19, 149, 149);
+              font-weight: bold;
+            "
+          >
+          <% let thdt = 0 %>
+          <% productList.forEach(product => { %>
+                     <% thdt += product.totalQuantity * product.price %>
+            <% }); %>
+            <%= thdt.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></td>
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div
+        style="
+          width: auto;
+          background-color: rgb(207, 210, 210);
+          float: left;
+          margin-right: 10px;
+          padding: 10px;
+          min-width: 170px;
+        "
+      >
+        <img
+          src="/images//money.png"
+          style="width: 50px; margin-top: 20px; float: left"
+        />
+          <div style="float: left; height: 50px; position: relative; top: 22px">
+            <h6 style="font-weight: bold;text-align: center; margin-left: 7px; margin-top: 5px;">Tiền lời</h6>
+            <p
+              style="
+                margin-left: 7px;
+                color: rgb(19, 149, 149);
+                font-weight: bold;
+              "
+            >
+            <% let thtl = 0 %>
+            <% productList.forEach(product => { %>
+                       <% thtl += product.totalQuantity * product.price - product.totalQuantity * product.gianhap %>
+              <% }); %>
+              <%= thtl.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %>
+            </p>
+          </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- thong kê theo sản phẩm -->
+  <table id="myTable" class="table table-responsive-xl">
+    <thead class="thead-dark">
+      <th style="text-align: center">Tên sản phẩm</th>
+      <!-- <th style="text-align: center">Số lượng trong kho</th> -->
+      <th style="text-align: center">Số lượng đã bán</th>
+      <th style="text-align: center">Giá nhập</th>
+      <th style="text-align: center">Giá bán</th>
+      <th style="text-align: center">Tiền hàng</th>
+      <th style="text-align: center">Doanh thu</th>
+      <th style="text-align: center">Số tiền hoàn vốn / lãi</th>
+      <!-- <th style="text-align: center">Số tiền lãi / hoàn vốn</th> -->
+      <th></th>
+    </thead>
+    <tbody>
+      <% productList.forEach(product => { %>
+      <tr>
+        <td style="width: 330px"><%= product.productName %></td>
+        <!-- <td style="text-align: center"><%= product.totalSizeQuantity %></td> -->
+        <td style="text-align: center">
+
+          <%= product.totalQuantity.toLocaleString() %>
+          
+        </td>
+        <% if (product.gianhap !== undefined) { %>
+        <td style="text-align: center">
+          <%= product.gianhap.toLocaleString('vi-VN', { style: 'currency',
+          currency: 'VND' }) %>
+        </td>
+        <% } else { %>
+        <td>N/A</td>
+        <% } %> <% if (product.price !== undefined) { %>
+        <td style="text-align: center">
+          <%= product.price.toLocaleString('vi-VN', { style: 'currency',
+          currency: 'VND' }) %>
+        </td>
+        <% } else { %>
+        <td>N/A</td>
+        <% } %>
+        <td style="text-align: center">
+          <%= (product.totalQuantity *
+          product.gianhap).toLocaleString('vi-VN', { style: 'currency',
+          currency: 'VND' }) %>
+        </td>
+        <td style="text-align: center">
+
+          <%= (product.totalQuantity * product.price).toLocaleString('vi-VN', {
+          style: 'currency', currency: 'VND' }) %>
+        </td>
+        <td style="text-align: center">
+          <%var totalSales = product.totalQuantity * product.price;
+          var totalCost = product.totalSizeQuantity * product.gianhap + product.totalQuantity * product.gianhap;
+          var profit = totalSales - totalCost;
+         %>
+            
+         <p style="color: <%= profit > 0 ? '#33CC33' : 'red' %>;font-weight: bold;">
+            <%= profit.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %>
+          </p>
+        <!-- <td style="text-align: center">
+          <%= ((product.gianhap * product.totalSizeQuantity) - (product.price *
+          product.totalQuantity)).toLocaleString('vi-VN', { style: 'currency',
+          currency: 'VND' }) %>
+        </td> -->
+        <td></td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <!-- <ul>
+        <% productList.forEach(product => { %>
+            <li>Số lượng kho: <%= product.totalSizeQuantity %> 
+            - Số lượng bán: <%= product.totalQuantity %>
+            - Name: <%= product.productName %>
+            - Price: <%= product.price %>
+            - Giá nhập: <%= product.gianhap %>
+            - Tiền bán được: <%= product.price * product.totalQuantity %>
+            - Tiền nhập hàng: <%= product.totalSizeQuantity * product.gianhap %>
+            - Doanh thu: <%= (product.price * product.totalQuantity) - (product.totalQuantity * product.gianhap) %>
+             </li>
+        <% }); %>
+    </ul> -->
+
+  <style>
+    .menu-link:visited {
+      color: red;
+    }
+    .centered-div {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+  <style>
+    .container_swap {
+      width: 400px;
+    }
+
+    .div_left {
+      width: 200px;
+
+      float: left;
+
+      text-align: center;
+    }
+
+    .div_right {
+      width: 200px;
+
+      float: left;
+
+      text-align: center;
+    }
+  </style>
+</div>
+
+<%- include('../inc/bottom') %>
