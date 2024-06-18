@@ -1,0 +1,311 @@
+<%- include('../inc/top') %>
+
+<div style="width: 1170px; margin: auto;">
+  <div style="margin-top: 30px">
+    <div style="margin-bottom: 20px">
+      <form action="/product/searchCloseProduct" method="GET">
+        <div class="input-group rounded">
+          <input
+            type="search"
+            class="form-control rounded"
+            placeholder="Search"
+            name="name"
+            aria-describedby="search-addon"
+          />
+          <button
+            type="submit"
+            style="
+              display: inline-block;
+              line-height: 30px;
+              padding: 0 50px;
+              -webkit-transition: all 0.4s ease;
+              -o-transition: all 0.4s ease;
+              -moz-transition: all 0.4s ease;
+              transition: all 0.4s ease;
+              cursor: pointer;
+              font-size: 15px;
+              border-radius: 6px;
+              margin-left: 5px;
+              text-transform: uppercase;
+              font-weight: 700;
+              color: #fff;
+              background-color: blue;
+              font-family: inherit;
+            "
+          >
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+
+    <div class="container">
+      <img
+        type="button"
+        data-toggle="collapse"
+        data-target="#filterCollapse"
+        aria-expanded="false"
+        aria-controls="filterCollapse"
+        src="/images/filter.png"
+        width="50px"
+      >
+        
+      </img>
+      <div class="collapse" id="filterCollapse">
+        <div class="card card-body">
+          <h4>Tùy chọn bộ lọc</h4>
+          <form id="filterForm" action="/product/closeProduct/filter" method="get">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="size">Kích cỡ:</label>
+                  <select class="form-control" id="size" name="size">
+                    <option value="">Tất cả Size</option>
+                    <% for (var size = 32; size <= 46; size++) { %>
+                        <option value="<%= size %>"><%= size %></option>
+                    <% } %>
+                </select>
+                </div>
+              </div>
+
+
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="color">Loại sản phẩm:</label>
+                  <select class="form-control" id="color" name="color">
+                    <option value="">All</option>
+                    <% for (let i = 0; i < listLoai.length; i++) { %>
+                    <option value="<%= listLoai[i]._id %>">
+                      <%= listLoai[i].name %>
+                    </option>
+                    <% } %>
+                  </select>
+                </div>
+              </div>
+              <div class="col-md-2">
+                <div class="form-group">
+                    <label for="minPrice">Giá tối thiểu:</label>
+                    <input type="number" class="form-control" id="minPrice" name="minPrice" placeholder="Giá tối thiểu">
+                  </div>
+            </div>
+
+            <div class="col-md-2">
+                <div class="form-group">
+                    <label for="maxPrice">Giá tối đa:</label>
+                    <input type="number" class="form-control" id="maxPrice" name="maxPrice" placeholder="Giá tối đa">
+                  </div>
+            </div>
+              
+              <div class="col-md-4">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary">
+                    Lọc
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+    <div class="d-flex flex-row-reverse" style="margin-bottom: 10px">
+     
+    </div>
+   
+    <table id="myTable" class="table table-responsive-xl">
+      <thead class="thead-dark">
+        <tr>
+          <th></th>
+          <th>Tên sản phẩm</th>
+          <th>Loại SP</th>
+          <th style="text-align: center;">Giá nhập</th>
+          <th style="text-align: center;">Giá bán</th>
+          <th style="text-align: center;">Số lượng</th>
+          <th style="text-align: center;">Kích cỡ</th>
+          <th style="text-align: center;">Trạng thái</th>
+          <th style="text-align: center;">Thay đổi trạng thái</th>
+          <th style="text-align: center;">Chỉnh sửa</th>
+        </tr>
+      </thead>
+      <tbody>
+        <% if (listProduct.length> 0) { %> <%
+        listProduct.reverse().forEach((data)=>{%>
+        <tr
+          class="alert"
+          role="alert"
+          data-id="<%= data.id %>"
+          data-target="#exampleModal"
+        >
+        <th>
+          <a href="/product/chitiet/<%=data._id%>"> Chi tiết</a>
+        </th>
+          <td class="d-flex align-items-center">
+            <div
+              class="img"
+              style="background-image: url(images/person_1.jpg)"
+            ></div>
+            <div class="pl-3 email">
+              <% var truncatedName = data.name.length > 40 ? data.name.substring(0, 40) + '...' : data.name; %>
+              <span> <%=truncatedName %> </span>
+            </div>
+          </td>
+
+          <td><%=data.id_cat.name %></td>
+
+          <td style="text-align: center;"><%= data.gianhap.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %>
+          <td style="text-align: center;"><%= data.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %>
+          <td style="text-align: center;">
+            <% let totalQuantity = 0; %>
+            <!-- Khởi tạo biến totalQuantity -->
+            <% data.sizes.forEach(function(size) { %> <% totalQuantity +=
+            size.quantity; %>
+            <!-- Tính tổng số lượng -->
+            <% }); %>
+            <%= totalQuantity.toLocaleString() %>
+            <!-- Hiển thị tổng số lượng -->
+          </td>
+          <td>
+            <% var sizes = data.sizes.map(function(size) { return size.size; });
+            %>
+            <!-- Tạo mảng sizes chứa các kích cỡ -->
+            <% sizes.sort(function(a, b) { return a - b; }); %>
+            <!-- Sắp xếp kích cỡ từ thấp đến cao -->
+            <%= sizes.join(', ') %>
+            <!-- Hiển thị kích cỡ với dấu phẩy -->
+          </td>
+         <td style="text-align: center;">
+          <% if(data.status==false){ %>
+            <p style="border-radius: 10px;background-color: rgb(185, 71, 90);border: 1px;height: 30px;padding-left: 6px;
+              padding-right: 6px;width: 70px;text-align: center;padding-top: 3px; color: #fff;">
+              Dừng bán
+            </p>
+      <% } else { %>
+        <!-- Add the code for the inactive state here -->
+      <% } %></td>
+      <td style="text-align: center;">
+        <form id="updateStatusForm_<%=data._id%>" action="/product/updatestatusProductHethang/<%=data._id%>" method="post">
+          <% if(data.status==false){ %>
+            <button type="button" class="btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#exampleModal_<%=data._id%>"> 
+              Mở bán
+            </button>
+          <% } else { %>
+            <!-- Add the code for the inactive state here -->
+          <% } %>
+        </form>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="exampleModal_<%=data._id%>" tabindex="-1" aria-labelledby="exampleModalLabel_<%=data._id%>" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h1 class="modal-title fs-5" id="exampleModalLabel_<%=data._id%>">Xác nhận chỉnh sửa trạng thái</h1>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                Bạn đang muốn sửa trạng thái sản phẩm?
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                <button type="submit" class="btn btn-primary" onclick="document.getElementById('updateStatusForm_<%=data._id%>').submit()">Save</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </td>
+      
+
+       
+
+          <td>
+            <button type="submit">
+              <span
+                ><a href="/product/updateProduct/<%=data._id%>">
+                  <i
+                    class="fa fa-pencil-square-o"
+                    style="
+                      font-size: 20px;
+                      color: rgb(65, 245, 92);
+                      margin-left: 10px;
+                    "
+                  ></i>
+                </a>
+              </span>
+            </button>
+          </td>
+        </tr>
+
+        <%} ) %> <% } else { %>
+        <p style="font-size: 18px">Không tìm thấy sản phẩm phù hợp.</p>
+        <% } %>
+      </tbody>
+    </table>
+  </div>
+ 
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const checkbox = document.getElementById("checkbox_checked");
+
+    checkbox.addEventListener("change", function () {
+      if (checkbox.checked) {
+      } else {
+        data.status = true;
+      }
+
+      // You can also perform other actions here based on the checkbox state.
+    });
+  });
+</script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+  $(document).ready(function () {
+   $("#filterForm").submit(function (event) {
+     event.preventDefault(); // Prevent the form from submitting normally
+ 
+     // Get the selected filter values
+     var selectedSize = $("#size").val();
+     var selectedColor = $("#color").val();
+     var minPrice = $("#minPrice").val();
+     var maxPrice = $("#maxPrice").val();
+ 
+     // Construct the URL with the selected filter values
+     var url = "/product/closeProduct/filter?";
+ 
+     if (selectedSize) {
+       url += "size=" + selectedSize + "&";
+     }
+ 
+     if (selectedColor) {
+       url += "id_cat=" + selectedColor + "&";
+     }
+ 
+     if (minPrice) {
+       url += "minPrice=" + minPrice + "&";
+     }
+ 
+     if (maxPrice) {
+       url += "maxPrice=" + maxPrice + "&";
+     }
+ 
+     // Remove the trailing '&' if present
+     if (url.endsWith("&")) {
+       url = url.slice(0, -1);
+     }
+ 
+     // Redirect to the filtered page
+     window.location.href = url;
+   });
+ });
+ </script>
+<style>
+  .dialog {
+    width: 300px;
+    padding: 20px;
+    background-color: #f0f0f0;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  }
+</style>
+
+
+<%- include('../inc/bottom') %>

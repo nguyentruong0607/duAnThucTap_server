@@ -1,0 +1,240 @@
+<%- include('../inc/top') %>
+<div style="min-height: 700px; width: 1400px; margin: auto">
+  <div class="row justify-content-center" style="margin-top: 10px">
+    <div style="text-align: center; margin-top: 20px">
+      <h1>Thống kê doanh thu</h1>
+    </div>
+  </div>
+  <div style="margin-bottom: 20px">
+    <!-- <form action="/bill/seachBill" method="GET" role="search">
+      <div class="input-group rounded">
+        <input
+          type="search"
+          class="form-control rounded"
+          placeholder="Search"
+          name="name_product"
+          aria-describedby="search-addon"
+        />
+        <button
+          type="submit"
+          style="
+            display: inline-block;
+            line-height: 30px;
+            padding: 0 50px;
+            -webkit-transition: all 0.4s ease;
+            -o-transition: all 0.4s ease;
+            -moz-transition: all 0.4s ease;
+            transition: all 0.4s ease;
+            cursor: pointer;
+            font-size: 15px;
+            border-radius: 6px;
+            margin-left: 5px;
+            text-transform: uppercase;
+            font-weight: 700;
+            color: #fff;
+            background-color: blue;
+            font-family: inherit;
+          "
+        >
+          <i class="fa fa-search"></i>
+        </button>
+      </div>
+    </form> -->
+  </div>
+
+  <!-- thong kê theo sản phẩm -->
+  <table id="myTable" class="table table-responsive-xl">
+    <thead class="thead-dark">
+      <th style="text-align: center">Tên sản phẩm</th>
+      <th style="text-align: center">Số lượng kho</th>
+      <th style="text-align: center">Số lượng đã bán</th>
+      <th style="text-align: center">Giá nhập</th>
+      <th style="text-align: center">Giá bán</th>
+      <th style="text-align: center">Tổng tiền nhập hàng</th>
+      <th style="text-align: center">Doanh thu</th>
+      <th style="text-align: center">Số tiền hoàn vốn / lãi</th>
+      <!-- <th style="text-align: center">Số tiền lãi / hoàn vốn</th> -->
+      <th></th>
+    </thead>
+    <tbody>
+      <% productList.forEach(product => { %>
+      <tr>
+        <td style="width: 330px"><%= product.productName %></td>
+        <td style="text-align: center">
+          <%= product.totalSizeQuantity.toLocaleString() %>
+        </td>
+        <td style="text-align: center">
+          <%= product.totalQuantity.toLocaleString() %>
+        </td>
+        <% if (product.gianhap !== undefined) { %>
+        <td style="text-align: center">
+          <%= product.gianhap.toLocaleString('vi-VN', { style: 'currency',
+          currency: 'VND' }) %>
+        </td>
+        <% } else { %>
+        <td>N/A</td>
+        <% } %> <% if (product.price !== undefined) { %>
+        <td style="text-align: center">
+          <%= product.price.toLocaleString('vi-VN', { style: 'currency',
+          currency: 'VND' }) %>
+        </td>
+        <% } else { %>
+        <td>N/A</td>
+        <% } %>
+        <td style="text-align: center">
+          <%= (product.totalSizeQuantity * product.gianhap +
+          product.totalQuantity*product.gianhap).toLocaleString('vi-VN', {
+          style: 'currency', currency: 'VND' }) %>
+        </td>
+        <td style="text-align: center">
+          <%= (product.totalQuantity * product.price).toLocaleString('vi-VN', {
+          style: 'currency', currency: 'VND' }) %>
+        </td>
+        <td style="text-align: center">
+          <% var totalSales = product.totalQuantity * product.price; var
+          totalCost = product.totalSizeQuantity * product.gianhap +
+          product.totalQuantity * product.gianhap; var profit = totalSales -
+          totalCost; %>
+
+          <p
+            style="color: <%= profit > 0 ? '#33CC33' : 'red' %>;font-weight: bold;"
+          >
+            <%= profit.toLocaleString('vi-VN', { style: 'currency', currency:
+            'VND' }) %>
+          </p>
+          <!-- <td style="text-align: center">
+          <%= ((product.gianhap * product.totalSizeQuantity) - (product.price *
+          product.totalQuantity)).toLocaleString('vi-VN', { style: 'currency',
+          currency: 'VND' }) %>
+        </td> -->
+        </td>
+
+        <td></td>
+      </tr>
+      <% }); %>
+    </tbody>
+  </table>
+  <!-- <ul>
+        <% productList.forEach(product => { %>
+            <li>Số lượng kho: <%= product.totalSizeQuantity %> 
+            - Số lượng bán: <%= product.totalQuantity %>
+            - Name: <%= product.productName %>
+            - Price: <%= product.price %>
+            - Giá nhập: <%= product.gianhap %>
+            - Tiền bán được: <%= product.price * product.totalQuantity %>
+            - Tiền nhập hàng: <%= product.totalSizeQuantity * product.gianhap %>
+            - Doanh thu: <%= (product.price * product.totalQuantity) - (product.totalQuantity * product.gianhap) %>
+             </li>
+        <% }); %>
+    </ul> -->
+
+  <br />
+  <table class="table table-responsive-xl">
+    <thead class="thead-dark">
+      <tr>
+        <th scope="col" style="text-align: center">Số sản phẩm nhập vào</th>
+        <th scope="col" style="text-align: center">Số sản phẩm bán ra</th>
+        <th scope="col" style="text-align: center">Số sản phẩm còn lại</th>
+        <th scope="col" style="text-align: center">Tổng số tiền nhập vào</th>
+        <th scope="col" style="text-align: center">Doanh thu</th>
+        <th scope="col" style="text-align: center">Số tiền hoàn vốn / lãi</th>
+      </tr>
+    </thead>
+    <tbody class="table-group-divider">
+      <tr>
+        <td style="text-align: center">
+          <% let tnh =0 %> <% let tcl1 = 0 %> <% if (pro.length> 0) { %> <%
+          pro.reverse().forEach((data)=>{%> <% let totalQuantity = 0; %>
+          <!-- Khởi tạo biến totalQuantity -->
+          <% data.sizes.forEach(function(size) { %> <% totalQuantity +=
+          size.quantity; %>
+          <!-- Tính tổng số lượng -->
+          <% }); %> <% totalQuantity.toLocaleString() %>
+          <!-- Hiển thị tổng số lượng -->
+          <% tcl1 += totalQuantity %> <%} ) %> <% } else { %>
+          <p style="font-size: 18px">Không tìm thấy sản phẩm phù hợp.</p>
+          <% } %> <% let tdb1 = 0 %> <% listBill.forEach(function(item) { %> <%
+          for (var i = 0; i < item.list.length; i++) { %> <% if(item.status==5
+          || item.status==3){ %> <% tdb1 = tdb1 + item.list[i].quantity %> <% }
+          %> <% } %> <% }); %> <% tnh = tcl1+tdb1 %> <%= tnh.toLocaleString() %>
+        </td>
+        <td style="text-align: center">
+          <% let tdb = 0 %> <% listBill.forEach(function(item) { %> <% for (var
+          i = 0; i < item.list.length; i++) { %> <% if(item.status==5 ||
+          item.status==3){ %> <% tdb = tdb + item.list[i].quantity %> <% } %> <%
+          } %> <% }); %> <%= tdb.toLocaleString() %>
+        </td>
+        <td style="text-align: center">
+          <% let tcl = 0 %> <% if (pro.length> 0) { %> <%
+          pro.reverse().forEach((data)=>{%> <% let totalQuantity = 0; %>
+          <!-- Khởi tạo biến totalQuantity -->
+          <% data.sizes.forEach(function(size) { %> <% totalQuantity +=
+          size.quantity; %>
+          <!-- Tính tổng số lượng -->
+          <% }); %> <% totalQuantity.toLocaleString() %>
+          <!-- Hiển thị tổng số lượng -->
+          <% tcl += totalQuantity %> <%} ) %> <%= tcl.toLocaleString() %> <% }
+          else { %>
+          <p style="font-size: 18px">Không tìm thấy sản phẩm phù hợp.</p>
+          <% } %>
+        </td>
+
+        <td style="text-align: center">
+          <% let totalProductMoney = 0; productList.forEach(product => {
+          totalProductMoney += product.gianhap * product.totalQuantity; }); %>
+          <%= (totalMoney + totalProductMoney).toLocaleString('vi-VN', { style:
+          'currency', currency: 'VND' }) %>
+        </td>
+        <td style="text-align: center">
+          <%= totalMoneyFromStatus3And5.toLocaleString('vi-VN', { style:
+          'currency', currency: 'VND' }) %>
+        </td>
+        <td style="text-align: center">
+          <% var calculatedValue = totalMoneyFromStatus3And5 - totalMoney -
+          totalProductMoney; %>
+
+          <span style="color: <%= calculatedValue > 0 ? '#33CC33' : 'red' %>;">
+            <%= calculatedValue.toLocaleString('vi-VN', { style: 'currency',
+            currency: 'VND' }) %>
+          </span>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+  <br />
+
+  <style>
+    .menu-link:visited {
+      color: red;
+    }
+    .centered-div {
+      text-align: center;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+  </style>
+  <style>
+    .container_swap {
+      width: 400px;
+    }
+
+    .div_left {
+      width: 200px;
+
+      float: left;
+
+      text-align: center;
+    }
+
+    .div_right {
+      width: 200px;
+
+      float: left;
+
+      text-align: center;
+    }
+  </style>
+</div>
+
+<%- include('../inc/bottom') %>

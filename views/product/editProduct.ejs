@@ -1,0 +1,385 @@
+<%- include('../inc/top') %>
+<div class="container">
+    <div class="page-wrapper p-t-45 p-b-50">
+        <div class="wrapper wrapper--w790">
+          <div class="card card-5">
+          <div class="card-heading">
+              <h2 class="title"> Chỉnh sửa sản phẩm</h2>
+          </div>
+          <div class="" style="width: 470px;">
+<form accept="" method="post" enctype="multipart/form-data">
+  <div class="containerEdit">
+    <div class="left-panel">
+        <!-- <div>
+            <img id="selectedImage"
+            src="/<%= objPr.image %>" class="rounded-circle"
+            width="300px"height="300px" style="margin-top: 0px;"/> 
+            <div style="width: 200px;height: 30px;margin-bottom: 20px;">
+                <input type="file" width="auto"id="inputFile" onchange="displayImage()"
+                style="margin-left: 80px;margin-top: 6px;" value="<%= objPr.image  %>" name="image" />
+            </div>
+        </div> -->
+        <div>
+          <% if (objPr.images && objPr.images.length > 0) { %>
+            <!-- <img id="selectedImage" src="/<%= objPr.images[0].image %>" class="rounded-circle" width="300px" height="300px" style="margin-top: 0px;"/> -->
+
+            <div style="position: relative;">
+              <img id="userImage" src="/<%= objPr.images[0].image %>" alt="User Image" class="user-image" width="300px" height="330px" style="border-radius: 50%;">
+              <img src="/images/left-arrow.png" width="30px" height="30px"
+               onclick="prevImage()" style="position: absolute; top: 50%; left: 7px; transform: translateY(-50%);"></img>
+              <img src="/images/right-arrow.png" width="30px" height="30px"
+               onclick="nextImage()" style="position: absolute; top: 50%; right: 7px; transform: translateY(-50%);"></img>
+            </div>
+            
+          
+            <script>
+              let currentImageIndex = 0;
+              const images = [<% objPr.images.forEach((image) => { %>'<%= image.image %>',<% }) %>];
+          
+              function nextImage() {
+                currentImageIndex = (currentImageIndex + 1) % images.length;
+                document.getElementById('userImage').src = '/' + images[currentImageIndex];
+              }
+              function prevImage() {
+          currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+          document.getElementById('userImage').src = '/' + images[currentImageIndex];
+        }
+            </script>
+            
+          <% } %> 
+            <div style="width: 200px;height: 30px;margin-bottom: 20px;">
+                <input type="file" id="inputFile" onchange="displayImage()" style="margin-left: 80px;margin-top: 6px;" value="<%= objPr.image %>" name="image" multiple/>
+            </div>
+        </div>
+        
+        
+    </div>
+
+    <div class="right-panel">
+
+    <div >
+        <div>
+            <input type="text" placeholder="Ten san pham" style="width: 90%;font-size: 25px;font-weight: bold;" name="name" value="<%= objPr.name  %>" required />
+            <br>
+            <label for="">Giá nhập: </label>
+            <div class="input-group">
+              <input type="number" placeholder="Nhập để thay đổi giá" class="inputgia" name="gianhap" value="<%=objPr.gianhap%>" required />
+              <span id="giaTienViet"></span>
+            </div>
+            <label for="">Giá bán:</label>
+            <input type="number" placeholder="Nhập để thay đổi giá" class="inputgia" name="price" value="<%=objPr.price%>" required />
+        </div>
+
+    <!-- <label for="quantityInput">Số lượng kích cỡ:</label>
+    <div class="input-row">
+        <input type="number"id="quantityInput" style="width: 30%;"
+        placeholder="Nhập số lượng Sizes" min="1" max="20" required>
+       
+   
+    <button onclick="generateInputFields()" class="upload-button">Thêm</button> -->
+
+
+
+  </div>
+    <div id="inputFieldsContainer"></div>
+
+    <script>
+        function generateInputFields() {
+            var quantity = document.getElementById("quantityInput").value;
+            var inputFieldsContainer = document.getElementById("inputFieldsContainer");
+            inputFieldsContainer.innerHTML = "";
+
+            for (var i = 0; i < quantity; i++) {
+                var inputFields = `
+                <div class="input-row">
+                    <input type="number" name="sizes[${i}][size]" placeholder="Size" ${i === 0 ? 'required' : ''}>
+                    <input type="number" name="sizes[${i}][quantity]" placeholder="Quantity" ${i === 0 ? 'required' : ''}><br>
+                </div>
+                `;
+                inputFieldsContainer.innerHTML += inputFields;
+            }
+        }
+    </script>
+    <% objPr.sizes.forEach((size, index) => { %>
+        <div>
+          <div class="input-row">
+            <label for="size">Kích cỡ:</label>
+            <input type="text" style="width: 25%;"
+            name="sizes[<%= index %>][size]" value="<%= size.size %>">
+            <label for="quantity">Số lượng:</label>
+            <input type="text" style="width: 25%;"
+            name="sizes[<%= index %>][quantity]" value="<%= size.quantity %>">
+          </div>
+        </div>
+      <% }) %>
+
+    
+    <div id="inputFieldsContainer"></div>
+    
+    <script>
+      function generateInputFields() {
+        var quantity = document.getElementById("quantityInput").value;
+        var inputFieldsContainer = document.getElementById("inputFieldsContainer");
+        inputFieldsContainer.innerHTML = "";
+    
+        for (var i = 0; i < quantity; i++) {
+          var inputFields = `
+          <div class="input-row">
+            <input type="number" name="sizes[${i}][size]" placeholder="Size" ${i === 0 ? 'required' : ''}>
+            <input type="number" name="sizes[${i}][quantity]" placeholder="Quantity" ${i === 0 ? 'required' : ''}><br>
+          </div>
+          `;
+          inputFieldsContainer.innerHTML += inputFields;
+        }
+      }
+    </script> 
+
+    
+    
+        <div>
+            <select style="width: 150px;" id="color" name="id_cat">
+                <option value="">Loại sản phẩm</option>
+                <% listLoai.forEach((data) => { %>
+                  <% let selected = ''; %>
+                  <% if (String(data._id) === String(objPr.id_cat)) { %>
+                    <% selected = 'selected'; %>
+                  <% } %>
+                  <option <%= selected %> value="<%= data._id %>"><%= data.name %></option>
+                <% }) %>
+              </select>
+              
+              
+        </div>
+
+        <input style="height: 500dp; width: 90%;" type="text" placeholder="Mô tả san pham" name="description" value="<%= objPr.description  %>" required />
+        <input type="text" name="trademark" placeholder="thuong hieu" value="<%= objPr.trademark %>" class="myInput" />
+        <div style="text-align: center;margin-top: 20px;width: 90%;">
+            <button  type="submit" style="background-color: rgb(146, 146, 71); padding: 10px; border-radius: 5px; color: white; border: none; cursor: pointer;margin-bottom: 10px;"
+            >Lưu chỉnh sửa</button>
+        </div>
+      </div>
+
+
+    </div>
+
+</div>
+</form>
+
+             
+
+
+</div>
+</div>
+    
+</div>
+</div>
+<script>
+  document.getElementById('updateButton').addEventListener('click', function() {
+    window.history.back();
+});
+
+
+  // Lấy giá trị từ input
+
+    function displayImage() {
+  var input = document.getElementById("inputFile");
+  var image = document.getElementById("selectedImage");
+  
+  var file = input.files[0];
+  var reader = new FileReader();
+  
+  reader.onload = function(e) {
+    image.src = e.target.result;
+  };
+  reader.readAsDataURL(file);
+}
+document.addEventListener("DOMContentLoaded", function () {
+    const sizeForm = document.getElementById("productForm");
+    const sizeList = document.getElementById("sizeList");
+    const sizeInput = document.getElementById("size");
+    const quantityInput = document.getElementById("quantity");
+    const addSizeButton = document.getElementById("addSize");
+
+    const sizes = [];
+
+    addSizeButton.addEventListener("click", function (event) {
+        event.preventDefault();
+        const size = sizeInput.value;
+        const quantity = quantityInput.value;
+
+        if (size && quantity) {
+            sizes.push({ size, quantity });
+            sizeList.innerHTML = "";
+            sizes.forEach((size, index) => {
+                sizeList.innerHTML += `<li>${size.size}: ${size.quantity}</li>`;
+            });
+
+            sizeInput.value = "";
+            quantityInput.value = "";
+        }
+    });
+
+});
+</script>
+
+<script>
+  // Sử dụng thư viện jQuery để gửi yêu cầu AJAX
+$.ajax({
+  url: "/api/listBill", // Đường dẫn tới API trên máy chủ
+  method: "GET",
+  success: function(data) {
+    // Cập nhật dữ liệu trên trang web
+    // Ví dụ: cập nhật danh sách đơn hàng
+    updateOrderList(data.listProduct);
+  },
+  error: function(error) {
+    console.log(error);
+  }
+});
+
+// Hàm cập nhật danh sách đơn hàng trên trang web
+function updateOrderList(listProduct) {
+  // Cập nhật danh sách đơn hàng trong HTML
+  // Ví dụ: sử dụng jQuery để cập nhật danh sách đơn hàng
+  $("#orderList").html(""); // Xóa danh sách đơn hàng hiện tại
+  listProduct.forEach(function(order) {
+    // Tạo HTML cho mỗi đơn hàng và thêm vào danh sách
+    var orderHtml = "<li>" + order.name + "</li>";
+    $("#orderList").append(orderHtml);
+  });
+}
+
+</script>
+
+<style>
+  .container {
+    width: 800px;
+    height: auto;
+    margin: auto;
+    margin-top: 40px;
+  }
+
+  .myTextarea {
+    width: 400px;
+    height: 130px;
+    padding-left: 10px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+  }
+  .upload-button {
+  background-color: #4CAF50; /* Màu nền */
+  color: white; /* Màu chữ */
+  padding: 5dp;
+  text-align: center; /* Căn giữa nội dung */
+  text-decoration: none; /* Bỏ gạch chân */
+  display: inline-block; /* Hiển thị dạng block */
+  font-size: 16px; /* Kích thước chữ */
+  margin: 4px 2px; /* Khoảng cách */
+  cursor: pointer; /* Con trỏ khi di chuột */
+  border-radius: 5px; /* Bo tròn góc */
+  border: none; /* Bỏ viền */
+}
+
+  .myInput {
+    word-wrap: break-word;
+    overflow-wrap: break-word;
+    width: 60%;
+  }
+
+  .input, .inputgia, .inputsoluong {
+    width: 200px;
+    height: 30px;
+    border-width: 1px;
+    border-radius: 10px;
+    border-color: blue;
+    border: none;
+    outline: none;
+    font-size: 18px;
+  }
+
+  .inputgia {
+    width: auto;
+    height: 30px;
+    padding-left: 10px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    color: red;
+  }
+
+  .inputsoluong {
+    width: auto;
+    height: 30px;
+    padding-left: 40px;
+    border: none;
+    outline: none;
+    border-radius: 10px;
+    color: red;
+  }
+
+  .size {
+    background-color: beige;
+    border-radius: 3px;
+    width: 30px;
+    height: auto;
+    float: left;
+    text-align: center;
+    color: black;
+  }
+
+  .checkbox-container, .checkbox-container1 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .checkbox-container input[type="checkbox"], .checkbox-container1 input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  .checkbox-container input[type="checkbox"]:checked, .checkbox-container1 input[type="checkbox"]:checked {
+    background-color: #2196F3;
+    border-color: #2196F3;
+  }
+
+  .checkbox-container label, .checkbox-container1 label {
+    font-size: 16px;
+    margin-right: 15px;
+  }
+
+  .input-row {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .containerEdit{
+    display: flex;
+      width: 900px;
+      height: auto;
+  }
+  .left-panel {
+      width: 34%;
+      height: auto;
+    }
+
+    .right-panel {
+      width: 51%;
+      height: auto;
+    }
+</style>
+
+  <script>
+    function trimTextarea() {
+      var textarea = document.getElementById("myTextarea");
+      textarea.value = textarea.value.trim();
+    }
+  </script>
+<%- include('../inc/bottom') %> 
