@@ -1,0 +1,225 @@
+<%- include('../inc/top') %>
+  <div class="container">
+    <div class="row justify-content-center" style="margin-top: 10px;">
+      <div style="text-align: center;margin-top: 20px; margin-bottom: 20px;">
+        <h1>Danh sách đơn hàng</h1>
+       </div>
+    </div>
+    <div style="margin-bottom: 20px;">
+      <form action="/bill/searchBillDaNhan" method="GET" role="search">
+        <div class="input-group rounded">
+          <input type="search" class="form-control rounded" placeholder="Search" name="name_product"
+            aria-describedby="search-addon" />
+          <button type="submit" style="display: inline-block;
+                        line-height: 30px;
+                        padding: 0 50px;
+                        -webkit-transition: all 0.4s ease;
+                        -o-transition: all 0.4s ease;
+                        -moz-transition: all 0.4s ease;
+                        transition: all 0.4s ease;
+                        cursor: pointer;
+                        font-size: 15px;
+                        border-radius: 6px;
+                        margin-left: 5px;
+                        text-transform: uppercase;
+                        font-weight: 700;
+                        color: #fff;
+                        background-color: blue;
+                        font-family: inherit;">
+            <i class="fa fa-search"></i>
+          </button>
+        </div>
+      </form>
+    </div>
+    <div class="container">
+      <img
+          type="button"
+          data-toggle="collapse"
+          data-target="#filterCollapse"
+          aria-expanded="false"
+          aria-controls="filterCollapse"
+          src="/images/filter.png"
+          width="50px"
+        >
+          
+        </img>
+      <div class="collapse" id="filterCollapse">
+        <div class="card card-body">
+          <h4>Tùy chọn bộ lọc</h4>
+          <form id="filterForm" action="/product/list/filter" method="get">
+            <div class="row">
+              <div class="col-md-4">
+                <div class="form-group">
+                  <label for="size">Size:</label>
+              
+                  <!-- Size Dropdown -->
+                  <select class="form-control" id="size" name="size">
+                      <option value="">Tất cả Size</option>
+                      <% for (var size = 32; size <= 46; size++) { %>
+                          <option value="<%= size %>"><%= size %></option>
+                      <% } %>
+                  </select>
+              </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label for="minPrice">Giá tối thiểu:</label>
+                  <input type="number" class="form-control" id="minPrice" name="minPrice" placeholder="Giá tối thiểu">
+                </div>
+              </div>
+  
+              <div class="col-md-2">
+                <div class="form-group">
+                  <label for="maxPrice">Giá tối đa:</label>
+                  <input type="number" class="form-control" id="maxPrice" name="maxPrice" placeholder="Giá tối đa">
+                </div>
+              </div>
+  
+              <div class="col-md-4" style="margin-top: 20px;">
+                <div class="form-group">
+                  <button type="submit" class="btn btn-primary">
+                    Lọc
+                  </button>
+                </div>
+              </div>
+            </div>
+          </form>
+  
+  
+  
+        </div>
+      </div>
+    </div>
+    <%- include('../inc/Danhan') %>
+
+      <table id="myTable" class="table table-responsive-xl">
+        <thead class="thead-dark">
+          <tr>
+            <th scope="col">Tên người dùng</th>
+            <th scope="col">Tên sản phẩm</th>
+            <th scope="col" style="text-align: center;">Kích cỡ</th>
+            <th scope="col" style="text-align: center;">Số lượng</th>
+            <th scope="col">Tổng tiền</th>
+            <th scope="col" style="text-align: center;">Trạng thái</th>
+            <!-- <th scope="col"> Quản lý</th> -->
+          </tr>
+        </thead>
+        <tbody>
+          <% listBill.forEach(function(item) { %>
+            <tr>
+              <td>
+                <%= item.name %>
+              </td>
+
+              <td style="width: 270px;">
+                <% for (var i=0; i < item.list.length; i++) { %>
+                  - <%= item.list[i].name_product %> <br>
+
+                    <% } %>
+              </td>
+              <td style="text-align: center;">
+                <% for (var i=0; i < item.list.length; i++) { %>
+                  <%= item.list[i].size %><br>
+                    <% } %>
+              </td>
+              <td style="text-align: center;">
+                <% for (var i=0; i < item.list.length; i++) { %>
+                  <%= item.list[i].quantity %><br>
+                    <% } %>
+              </td>
+              <td>
+                <%= item.total.toLocaleString('vi-VN', { style: 'currency' , currency: 'VND' }) %>
+              </td>
+              <td>
+                <% if (item.status===0) { %>
+                  Chờ xác nhận
+                  <% } else if (item.status===1) { %>
+                    Đã xác nhận
+                    <% } else if (item.status===2) { %>
+                      Đang giao
+                      <% } else if (item.status===3) { %>
+                        <h6 style="color: #dc3545;font-weight: bold;text-align: center; margin-top: 5px;">Đã giao</h6>
+                        <% } else if (item.status===4) { %>
+                          Hủy đơn
+                          <% } else if (item.status===5) { %>
+                             Đã nhận hàng
+                            <% } else { %>
+                              Trạng thái: Khác
+                              <% } %>
+              </td>
+              <!-- <td>
+          <div style="display: flex;
+          align-items: center;
+          gap: 10px;">
+          <form action="/bill/updatebillPro/<%= item._id %>" method="post">
+            <% if (item.status == 1 && item.status !== 2&& item.status !== 3 && item.status !== 4) { %>
+            <button type="submit" class="btn-primary btn-sm">
+              <span>Giao hàng</span>
+            </button>
+            <% } %>
+          </form>
+          
+          <form action="/bill/updatebillProHuy/<%= item._id %>" method="post">
+            <% if (item.status !== "Xác nhận"&& item.status !== "Đang giao"&& item.status !== "Đã giao"&& item.status !== "Đã nhận") { %>
+            <button type="submit" class="btn-primary btn-sm">
+              <span>Hủy</span>
+            </button>
+            <% } %>
+          </form>
+          
+          <form action="/bill/updatebillProGiaohang/<%= item._id %>" method="post">
+            <% if (item.status === "Xác nhận"&& item.status !== "Đang giao"&& item.status !== "Đã giao"&& item.status !== "Đã nhận") { %>
+            <button type="submit" class="btn-primary btn-sm" id="deliveryButton">
+              <span>Giao hàng</span>
+            </button>
+            <% } %> 
+          </form>
+        </div>
+        </td> -->
+            </tr>
+            <% }); %>
+
+        </tbody>
+      </table>
+  </div>
+  <script>
+    $(document).ready(function () {
+      $("#filterForm").submit(function (event) {
+        event.preventDefault(); // Prevent the form from submitting normally
+
+        // Get the selected filter values
+        var selectedSize = $("#size").val();
+        var selectedColor = $("#color").val();
+        var minPrice = $("#minPrice").val();
+        var maxPrice = $("#maxPrice").val();
+
+        // Construct the URL with the selected filter values
+        var url = "/bill/listBillsDanhan/filter?";
+
+        //  if (selectedSize) {
+        //    url += "size=" + selectedSize + "&";
+        //  }
+        if (selectedSize) {
+          url += "size=" + selectedSize + "&";
+        }
+        if (minPrice) {
+          url += "minPrice=" + minPrice + "&";
+        }
+
+        if (maxPrice) {
+          url += "maxPrice=" + maxPrice + "&";
+        }
+
+        // Remove the trailing '&' if present
+        if (url.endsWith("&")) {
+          url = url.slice(0, -1);
+        }
+
+        // Redirect to the filtered page
+        window.location.href = url;
+      });
+    });
+  </script>
+
+  <%- include('../inc/bottom') %>

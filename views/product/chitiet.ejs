@@ -1,0 +1,188 @@
+<%- include('../inc/top') %>
+
+<div style="padding: 20px;width: 1300px;margin: auto;">
+  <h1 style="text-align: center;margin-bottom: 40px;">Chi tiết sản phẩm</h1>
+  <div class="image-container">
+    <ul class="image-list">
+      <!-- <% objSp.images.forEach(image => { %>
+        <li class="swiper-slide"><img src="/<%= image.image %>" alt="Ảnh" class="thumbnail" width="100px" height="100px"></li>
+      <% }); %> -->
+
+      <div style="position: relative;">
+        <img id="userImage" src="/<%= objSp.images[0].image %>" alt="User Image" class="user-image" width="300px" height="370px">
+        <img src="/images/left-arrow.png" width="30px" height="30px"
+         onclick="prevImage()" style="position: absolute; top: 50%; left: 7px; transform: translateY(-50%);"></img>
+        <img src="/images/right-arrow.png" width="30px" height="30px"
+         onclick="nextImage()" style="position: absolute; top: 50%; right: 7px; transform: translateY(-50%);"></img>
+      </div>
+      
+    
+      <script>
+        let currentImageIndex = 0;
+        const images = [<% objSp.images.forEach((image) => { %>'<%= image.image %>',<% }) %>];
+    
+        function nextImage() {
+          currentImageIndex = (currentImageIndex + 1) % images.length;
+          document.getElementById('userImage').src = '/' + images[currentImageIndex];
+        }
+        function prevImage() {
+    currentImageIndex = (currentImageIndex - 1 + images.length) % images.length;
+    document.getElementById('userImage').src = '/' + images[currentImageIndex];
+  }
+      </script>
+    </ul>
+  </div>
+      <div style="height: 500px;padding: 10px;">
+        <h1 style="font-style: italic; font-weight:bold;"><%=objSp.name %></h1>
+      <h2 style="color: red;"><%=objSp.price.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' }) %></h2>
+      <% objSp.sizes.forEach((size, index) => { %>
+          <div class="input-row">
+            <label for="size">Kích cỡ:</label>
+            <p><%= size.size %></p>
+            <label for="quantity">Số lượng:</label>
+            <% if (size.quantity !== null && size.quantity !== undefined) { %>
+              <p><%= size.quantity.toLocaleString() %></p>
+            <% } else { %>
+              <p>Quantity not available</p>
+            <% } %>
+          </div>
+        <% }) %>
+          <p>Loại sản phẩm: <%=objSp.id_cat.name %></p>
+          <p>Thương hiệu: <%= objSp.trademark %></p>
+          <p>Thông tin:</p>
+          <p><%= objSp.description %></p>
+  </div>
+  <div style="clear: both;">
+
+  </div>
+</div>
+
+<style>
+  .image-container {
+  margin-right: 10px; 
+  width: 300px;
+  float: left;
+  height: 600px;
+}
+  .container{
+      width: 800px;
+      height: auto;
+      margin: auto;
+      margin-top: 40px;
+  }
+  .myTextarea {
+  border: none;
+}
+.myInput {
+  word-wrap: break-word;
+  /* hoặc */
+  overflow-wrap: break-word;
+  width: 60%;
+}
+  .input{
+      width: 200px;
+      height: 30px;
+      border-width: 1px;
+      border-radius: 10px;
+      border-color: blue;
+      border: none;
+      outline: none;
+      font-size: 18px;
+
+  }
+  .inputgia{
+      width: 130px;
+      height: 30px;
+      padding-left: 10px;
+      border: none;
+      outline: none;
+      border-radius: 10px;
+      color: red;
+  }
+  .inputsoluong{
+      width: auto;
+      height: 30px;
+      padding-left: 40px;
+      border: none;
+      outline: none;
+      border-radius: 10px;
+      color: red;
+  }
+  .myTextarea{
+      width: 400px;
+      height: 130px;
+      padding-left: 10px;
+      border: none;
+      outline: none;
+      border-radius: 10px;
+  }
+  .size{
+      background-color: beige;
+      border-radius: 3px;
+      width: 30px;
+      height: auto;
+      float: left;
+      text-align: center;
+      color: black;
+  }
+</style>
+<style>
+  .checkbox-container {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+    float: left;
+  }
+
+  .checkbox-container input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  .checkbox-container input[type="checkbox"]:checked {
+    background-color: #2196F3;
+    border-color: #2196F3;
+  }
+
+  .checkbox-container label {
+    font-size: 16px;
+    margin-right: 15px;
+  }
+  .checkbox-container1 {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px;
+  }
+
+  .checkbox-container1 input[type="checkbox"] {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #ccc;
+    border-radius: 4px;
+    margin-right: 10px;
+    cursor: pointer;
+  }
+
+  .checkbox-container1 input[type="checkbox"]:checked {
+    background-color: #2196F3;
+    border-color: #2196F3;
+  }
+
+  .checkbox-container1 label {
+    font-size: 16px;
+  }
+  .input-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+</style>
+<%- include('../inc/bottom') %> 
