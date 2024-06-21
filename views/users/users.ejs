@@ -1,0 +1,151 @@
+<%- include('../inc/top') %>
+    <div class="container">
+        <div class="row justify-content-center" style="margin-top: 20px;">
+          <div style="text-align: center;margin-bottom: 20px;">
+            <h1>Danh sách người dùng</h1>
+           </div>
+        </div>
+        <div style="margin-bottom: 20px;">
+            <form action="/users/searchUser" method="GET" role="search">
+                <div class="input-group rounded">
+                    <input type="search" class="form-control rounded" placeholder="Search" name="username"
+                        aria-describedby="search-addon" />
+                    <button type="submit" style="display: inline-block;
+                        line-height: 30px;
+                        padding: 0 50px;
+                        -webkit-transition: all 0.4s ease;
+                        -o-transition: all 0.4s ease;
+                        -moz-transition: all 0.4s ease;
+                        transition: all 0.4s ease;
+                        cursor: pointer;
+                        font-size: 15px;
+                        border-radius: 6px;
+                        margin-left: 5px;
+                        text-transform: uppercase;
+                        font-weight: 700;
+                        color: #fff;
+                        background-color: blue;
+                        font-family: inherit;">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </div>
+            </form>
+        </div>
+        <div class="row" style="min-height: 600px;">
+            <div class="col-md-12 ">
+            
+                <div class="card shadow-sm p-3 mb-5 bg-white rounded" style="padding: 30px;">
+                    <div class="table table-striped">
+
+                        <table id="myTable" class="table table-responsive-xl">
+                            <thead class="thead-dark">
+                                <tr>
+                                  
+
+                                    <th>Đơn Hàng Đã Mua</th>
+                                    
+                                    <th >Email
+                                    </th>
+                                    <th >
+                                        Tên tài khoản 
+                                    </th>
+                                     <th>Tên Người dùng </th>
+                                    <th>Số Điện Thoại</th>
+                                    <th >Phân Quyền</th>
+
+                                    <th>&nbsp;</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <% list.forEach(data=>{%>
+                                    <tr class="alert" role="alert" data-id="<%= data.id %>" data-target="#exampleModal">
+                                        <th><% if (data.role === "User") { %>
+                                                <a href="/users/listOder/<%= data._id  %>">
+                                                      Xem Đơn Hàng</a>
+                                            <% }  
+                                      else %></th>
+                                        <td class="d-flex align-items-center">
+                                            <div class="img" style="background-image: url(images/person_1.jpg);"></div>
+                                            <div class="pl-3 email">
+                                                <span>
+                                                    <%=data.email %>
+                                                </span>
+                                            </div>
+                                        </td>
+
+                                        <td>
+                                            <%=data.username %>
+                                        </td>
+                                        <td>
+                                            
+                                            <% if (data.fullname === "") { %>
+                                              Chưa cập nhập
+                                          <% } else { %>
+                                            <%=data.fullname %>
+                                          <% } %>
+                                        </td>
+                                          <td>
+                                            <%=data.phone %>
+                                        </td>
+
+                                        <td class="status" style="text-align: center;"><span class="active">
+                                                <%=data.role %>
+                                            </span></td>
+                                        <td>
+                                          
+                                        </td>    
+                                    </tr>
+                                  
+                                    <%} ) %>
+                            </tbody>
+                          </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+
+      <script>
+        function openPageRole() {
+          const currentUrl = window.location.href;
+          const targetUrl = 'http://localhost:3000/users';
+          const newUrl = 'http://localhost:3000/users/sortrole';
+      
+          if (currentUrl === targetUrl) {
+            window.location.href = newUrl;
+          } else if (currentUrl === newUrl) {
+            window.history.back();
+          }
+        }
+      </script>
+      <script>
+        function openPageEmail() {
+          const currentUrl = window.location.href;
+          const targetUrl = 'http://localhost:3000/users';
+          const newUrl = 'http://localhost:3000/users/sortemail';
+      
+          if (currentUrl === targetUrl) {
+            window.location.href = newUrl;
+          } else if (currentUrl === newUrl) {
+            window.history.back();
+          }
+        }
+      </script>
+      <script>
+        function openPageUsername() {
+          const currentUrl = window.location.href;
+          const targetUrl = 'http://localhost:3000/users';
+          const newUrl = 'http://localhost:3000/users/sortusername';
+      
+          if (currentUrl === targetUrl) {
+            window.location.href = newUrl;
+          } else if (currentUrl === newUrl) {
+            window.history.back();
+          }
+        }
+      </script>
+      
+
+    <%- include('../inc/bottom') %>

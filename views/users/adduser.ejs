@@ -1,0 +1,135 @@
+<%- include('../inc/top') %>
+    <div class="container">
+        <div class="page-wrapper p-t-45 p-b-50">
+            <div class="wrapper wrapper--w790">
+                <div class="card card-5">
+                    <div class="card-heading">
+                        <h2 class="title">Thêm tài khoản </h2>
+                    </div>
+                    <div class="card-body">
+                        <form action="" method="POST">
+
+                            <div class="form-row">
+                                <div class="name">Email</div>
+                                <div class="value">
+                                    <div class="row row-refine">
+                                        <div class="input-group col-8">
+                                            <input class="input--style-5" type="email" name="email" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                            <div class="form-row m-b-55">
+                                <div class="name">Tài Khoản </div>
+                                <div class="value">
+                                    <div class="row row-refine">
+                                        <div class="col-8">
+                                            <div class="input-group-desc">
+                                                <input class="input--style-5" type="username" name="username" required
+                                                    minlength="6" maxlength="20">
+                                                <label class="label--desc"> tài khoản phải nằm trong khoảng 8-20 kí tự 
+                                                   </label>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+
+                            </div>
+                            <div class="form-row m-b-55">
+                                <div class="name">Mật khẩu </div>
+                                <div class="value">
+                                    <div class="row row-refine">
+                                        <div class="col-8">
+                                            <div class="input-group-desc">
+                                                <input class="input--style-5" type="password" name="password" required>
+                                                <label class="label--desc">Mật khẩu</label>
+                                            </div>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="name">Họ và tên </div>
+                                <div class="value">
+                                    <div class="row row-refine">
+                                        <div class="input-group col-8">
+                                            <input class="input--style-5" type="fullname" name="fullname" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="form-row">
+                                <div class="name">Số điện thoại </div>
+                                <div class="value">
+                                    <div class="row row-refine">
+                                        <div class="input-group col-8">
+                                            <input class="input--style-5" type="phone" name="phone" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            
+                            <div class="form-row">
+                                <div class="name">Ngày sinh</div>
+                                <div class="value">
+                                    <div class="row row-refine">
+                                        <div class="input-group col-8">
+                                            <input class="input--style-5" type="dob" name="dob" required>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="name">Giới tính</div>
+                                <div class="value">
+                                    <div class="row row-refine">
+                                        <div class="input-group col-8">
+                                            <label>
+                                                <input class="input--style-5" type="radio" name="gender" value="male"
+                                                    required>
+                                                Nam
+                                            </label>
+                                            <label>
+                                                <input class="input--style-5" type="radio" name="gender" value="female"
+                                                    required>
+                                                Nữ
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-row">
+                                <div class="name">Phân Quyền </div>
+                                <div class="value">
+                                    <div class="input-group">
+                                        <div class="rs-select2 js-select-simple select--no-search">
+                                            <select name="role" class="browser-default custom-select"
+                                                style="width:200px;background-color: rgb(246, 248, 248);">
+                                                <option disabled="disabled" selected="selected">Chọn vai trò</option>
+                                                <option>Admin</option>
+                                                <option>Người dùng </option>
+
+                                            </select>
+                                            <div class="select-dropdown"></div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="d-flex justify-content-center">
+                                <button class="btn btn--radius-2 btn--green" type="submit">Đăng ký</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <%- include('../inc/bottom') %>
