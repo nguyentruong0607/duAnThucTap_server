@@ -1,9 +1,8 @@
 var express = require('express');
 var router = express.Router();
-
+var controller =require('../controllers/product.controller')
+var check_login = require('../middleware/check_login')
 /* GET home page. */
-router.get('/', function(req, res, next) {
-  res.render('index', { title: 'Express' });
-});
+router.get('/',check_login.request_login, controller.list)
 
 module.exports = router;
