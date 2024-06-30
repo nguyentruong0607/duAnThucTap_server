@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const apiController = require('../controllers/api/api-cart');
+const apiController = require('../controlllers/api/api-cart');
 
 
 router.get('/delete/:id_cart',apiController.delete);

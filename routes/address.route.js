@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const apiController = require('../controllers/api/api-address');
+const apiController = require('../controlllers/api/api-address');
 
 
 router.get('/provinces', apiController.provinces);

@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
-var proCtl=require('../controllers/product.controller')
-var billCtl=require('../controllers/bill.controller')
+var proCtl=require('../controlllers/product.controller')
+var billCtl=require('../controlllers/bill.controller')
 var check_login = require('../middleware/check_login')
 
 var multer = require("multer");

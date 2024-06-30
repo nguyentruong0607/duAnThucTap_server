@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const billController = require('../controllers/bill.controller');
+const billController = require('../controlllers/bill.controller');
 var check_login = require('../middleware/check_login')
 
 
