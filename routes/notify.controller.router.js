@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const apiController = require('../controllers/notify.controller');
+const apiController = require('../controlllers/notify.controller');
 var check_login = require('../middleware/check_login')
 
 router.get('/sendNotify',check_login.request_login, apiController.sendNotify);

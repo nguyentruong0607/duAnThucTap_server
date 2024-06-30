@@ -1,10 +1,10 @@
 var express = require('express');
 var router = express.Router();
 const MyModel = require("../models/model");
-var apiU=require('../controllers/api/api-user');
-var apiP = require ('../controllers/api/api-product')
-var apiC = require ('../controllers/api/api-comment');
-var apiB = require('../controllers/api/api-bill')
+var apiU=require('../controlllers/api/api-user');
+var apiP = require ('../controlllers/api/api-product')
+var apiC = require ('../controlllers/api/api-comment');
+var apiB = require('../controlllers/api/api-bill')
 
 
 var multer = require("multer");

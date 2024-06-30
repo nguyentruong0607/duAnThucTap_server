@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const apiController = require('../controllers/api/api-billmore');
+const apiController = require('../controlllers/api/api-billmore');
 
 router.post('/cancel/:id_billmore', apiController.cancelBill);
 router.post('/add/:token', apiController.addBill);
