@@ -31,6 +31,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static("uploads"));
+
+app.use(express.static("tmp"));
 app.use(session({
   secret: '2372347293sdhjfhjksddfssfsdffkjssii', //chuỗi kí tự đặc biệt để session mã hóa, tự viết
   resave: false,
