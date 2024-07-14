@@ -73,21 +73,16 @@
                         <% posts.reverse().forEach((data) => { %>
                               
                             <!-- Khởi tạo biến totalQuantity -->
-                            <% if ( item._id.toLocaleString()  === data.id_cat._id.toLocaleString()) { %>
+                            <% if (data.id_cat && item._id.toString() === data.id_cat._id.toString()) { %>
                               <% data.sizes.forEach(function(size) { %>
                                 <% totalQuantity += size.quantity; %>
-                            <% }); %> 
-                              
-                                <!-- Tính tổng số lượng -->
-                            <% }  else { %> 
-                              
-                              <% } %>
-                            <!-- Hiển thị tổng số lượng -->
+                              <% }); %> 
+                            <% } %>
                         <% }); %>
                         <%= totalQuantity.toLocaleString() %>
-                    <% } else { %>
+                      <% } else { %>
                         <p style="font-size: 18px">Không tìm thấy sản phẩm phù hợp.</p>
-                    <% } %>
+                      <% } %>
                     
                     </td>
                     <!-- <td>
@@ -106,6 +101,7 @@
         </tbody>
       </table>
     </div>
+  </div>
   </div>
   </div>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
